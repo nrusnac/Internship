@@ -26,9 +26,18 @@ UdemyCourse/
 ddos_dataset/
 ddos_dataset_parquet/
 transformed_ddos_dataset_from_csv/
-./Task/transformed_ddos_dataset_from_parquet/
-./Task/1_0_176_98_transformed_ddos_dataset_pandas.csv
+transformed_ddos_dataset_from_parquet/
+1_0_176_98_transformed_ddos_dataset_pandas.csv
 geoip2-ipv4.csv
+
+MLflow/*
+!MLflow/Tasks/
+*/.env
+*/*/mlartifacts
+mlflow.db
+
+
+
 
 # Logs & Data
 *.log
