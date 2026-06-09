@@ -1,0 +1,64 @@
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: internship_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internship-network
+
+  # Jupyter Notebook Service
+  jupyter:
+    build:
+      context: ./jupyter
+      dockerfile: Dockerfile
+    container_name: jupyter-container
+    ports:
+      - "8888:8888"
+    volumes:
+      - /Users/nrusnac/Dungeon/Internship:/workspace
+    networks:
+      - internship-network
+    depends_on:
+      - postgres
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+
+  # Flask Prediction Service
+  flask:
+    build:
+      context: ./flask-service
+      dockerfile: Dockerfile
+    container_name: flask-app
+    ports:
+      - "5001:5000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: internship_db
+      DB_USER: postgres
+      DB_PASSWORD: password123
+      MODEL_PATH: /workspace/Docker/models/iris_model.joblib
+    volumes:
+      - /Users/nrusnac/Dungeon/Internship:/workspace
+    networks:
+      - internship-network
+    depends_on:
+      - postgres
+    command: python app.py
+
+# Named volumes for data persistence
+volumes:
+  postgres_data:
+
+# Custom network for inter-container communication
+networks:
+  internship-network:
+    driver: bridge
