@@ -43,3 +43,4 @@ mlflow.db
 *.log
 *.csv.metadata
 
+Docker/DETAILED_EXPLANATION.md
