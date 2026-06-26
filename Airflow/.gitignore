@@ -1,0 +1,10 @@
+# Ignore everything in this folder
+*
+
+# ...except the Task folder and its contents
+!.gitignore
+!Tasks/
+!Tasks/**
+__pycache__/
+logs/
+.env
