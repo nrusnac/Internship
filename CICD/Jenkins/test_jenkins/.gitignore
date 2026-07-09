@@ -1,0 +1,6 @@
+# Gradle
+backend/.gradle/
+backend/build/
+
+# macOS
+.DS_Store

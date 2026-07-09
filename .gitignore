@@ -44,3 +44,7 @@ mlflow.db
 *.csv.metadata
 
 Docker/DETAILED_EXPLANATION.md
+
+Cloud
+StudyGuides/
+Terraform/

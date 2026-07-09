@@ -5,6 +5,9 @@
 !.gitignore
 !Tasks/
 !Tasks/**
+
+# ...but keep the local airflow config out of git
+Tasks/config/airflow.cfg
 __pycache__/
 logs/
 .env
