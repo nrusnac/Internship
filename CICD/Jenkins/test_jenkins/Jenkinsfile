@@ -13,13 +13,13 @@ pipeline {
     stages {
         stage('Backend: Build & Test') {
             steps {
-                dir('backend') {
+                dir('CICD/Jenkins/test_jenkins/backend') {
                     sh './gradlew --no-daemon clean build'
                 }
             }
             post {
                 always {
-                    junit testResults: 'backend/build/test-results/test/*.xml',
+                    junit testResults: 'CICD/Jenkins/test_jenkins/backend/build/test-results/test/*.xml',
                           allowEmptyResults: true
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Frontend: Install, Test & Build') {
             steps {
-                dir('frontend') {
+                dir('CICD/Jenkins/test_jenkins/frontend') {
                     sh 'yarn install --immutable'
                     sh 'yarn test:ci'
                     sh 'yarn build'
@@ -35,7 +35,7 @@ pipeline {
             }
             post {
                 always {
-                    junit testResults: 'frontend/test-results/junit.xml',
+                    junit testResults: 'CICD/Jenkins/test_jenkins/frontend/test-results/junit.xml',
                           allowEmptyResults: true
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: 'backend/build/libs/*.jar, frontend/dist/**',
+            archiveArtifacts artifacts: 'CICD/Jenkins/test_jenkins/backend/build/libs/*.jar, CICD/Jenkins/test_jenkins/frontend/dist/**',
                              fingerprint: true
         }
     }
